@@ -1,0 +1,7 @@
+server:
+  port: 8761
+
+eureka:
+  cliente:
+    register-with-eureka: false # O próprio servidor não precisa se registrar
+    fetch-registry: false # Não precisa buscar o registro, ele é o registro

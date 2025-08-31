@@ -1,0 +1,32 @@
+server:
+  port: 8040 # Ponto de entrada da aplicação
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true # Habilita a busca de serviços no Eureka
+          lower-case-service-id: true # Converte o nome do serviço para minúsculo
+      routes:
+        # Rota para o serviço de catálogo de produtos
+        - id: product-catalog-service
+          uri: lb://product-catalog-service # lb:// indica que o balanceamento de carga (via Eureka) deve ser usado
+          predicates:
+            - Path=/api/products/** # Qualquer requisição para /api/products/...
+          filters:
+            - StripPrefix=1 # Remove o '/api' antes de encaminhar para o microsserviço
+
+        # Rota para o serviço de pedidos
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/api/orders/**
+          filters:
+            - StripPrefix=1
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

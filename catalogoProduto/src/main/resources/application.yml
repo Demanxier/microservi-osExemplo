@@ -1,0 +1,11 @@
+server:
+  port: 8081 # Porta para este serviço
+
+spring:
+  application:
+    name: product-catalog-service # Nome que será registrado no Eureka
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/ # Endereço do Eureka Server
